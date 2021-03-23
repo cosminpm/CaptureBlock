@@ -1,3 +1,8 @@
-mafranpe es tonto
+- Comando para encender el directorio virtual
+source env/bin/activate
 
-prque tu lo digas
+- Comando para aniadir las dependencias al requirements
+pip freeze > requirements.txt
+
+- Para instalar las dependencias del requirements
+pip install -r requirements.txt
