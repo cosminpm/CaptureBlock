@@ -6,3 +6,15 @@ pip freeze > requirements.txt
 
 - Para instalar las dependencias del requirements
 pip install -r requirements.txt
+
+Para obtener los links
+https://twitter.com/twitter/status/
+Y para obtener al tweet al que se esta respondiendo basta con obtener el atributo in_reply_to_status_id por lo que el link seria:
+https://twitter.com/twitter/status/in_reply_to_status_id
+
+Captura desde GUI
+Hay que tener en cuenta lo siguiente:
+captura.py hace una captura gracias a la terminal, pero al estar usando un subsistema de linux en uno de windows este no sabe que estamos accediento a una gui por lo tanto no funciona correctamente
+En cambio si ejecutamos la aplicacion desde la cmd si funciona bien. Para que funcione bien se tiene que ejecutar desde la terminal del SO.
+
+Ahora hay que ver si se puede hacer de otra forma.

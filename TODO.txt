@@ -1,0 +1,7 @@
+A tener en cuenta:
+Cada vez que se enciende el bot responde a todos los tweets que se hayan mencionando. Pero si se resetea vuelve a mencionarlos.
+--> Solucion: Marcar como favorito y comprobar si se ha mencionado como favorito. Esto evitara problemas del tipo que cada vez que se caiga la electricidad o se caiga el bot vuelvan a responder a todos los tweets.
+
+Para responder a un tuit:
+api.update_status(status= (stat), in_reply_to_status_id=tweet.id,) 
+** Importante el tweet tiene que empezar por los @ de la gente a la que se responde por ejemplo si quiero responder a Mafranpe tengo que poner @Mafranpe al principio del tweet

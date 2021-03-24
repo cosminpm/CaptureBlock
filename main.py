@@ -28,13 +28,24 @@ def create_api():
     logger.info("API created")
     return api
 
-def check_mentions(api):
-    stat = "Esto es una prueba :)"
-    api.update_status(status=stat)
+def check_mentions(api, since_id):
+    logger.info("Escribiendo tweets de respuestas a los usuarios")
+    new_since_id = since_id
+    # Recorre todos los tweets en los que se menciona cuya id sea la pasada como parametro
+    for tweet in tweepy.Cursor(api.mentions_timeline, since_id = since_id).items():
+        #logger.info(tweet)
+        logger.info(tweet.text)
+
 
 def main():
     api = create_api()
-    check_mentions(api)
+    since_id = 1
+    while True:
+        # La id sirve para que aquellos tweets que se hayan mencionado no se vuelvan a mencionar
+        since_od = check_mentions(api, since_id)
+        logger.info("Esperando a que lleguen solicitudes")
+        # Se tiene que hacer un sleep para que no se sobreesature las solicitudes de la API
+        time.sleep(60)
 
 if __name__ == '__main__':
     main()
