@@ -18,3 +18,8 @@ captura.py hace una captura gracias a la terminal, pero al estar usando un subsi
 En cambio si ejecutamos la aplicacion desde la cmd si funciona bien. Para que funcione bien se tiene que ejecutar desde la terminal del SO.
 
 Ahora hay que ver si se puede hacer de otra forma.
+Link de ejemplo de tuit:
+https://twitter.com/cosminpm/status/1374518048367861768
+
+Posible alternativa a selenium
+https://medium.com/analytics-vidhya/how-to-create-twitter-screenshots-with-python-c142ef71fda7
