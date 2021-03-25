@@ -4,10 +4,11 @@ import tweepy
 import logging
 import os
 import time
+import webbrowser
+import pyautogui
+from PIL import Image
 
-
-
-TIME_WAITING = 60
+NOMBRE_FICHERO = 'patata.png'
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -30,16 +31,46 @@ def create_api():
     logger.info("API created")
     return api
 
+def capturarImagen(tweet_citado_id):
+    COORD_X = 600
+    COORD_Y = 170
+    ANCHURA = 1190 - COORD_X
+    ALTURA = 1010 - COORD_Y
+
+    COLOR_CUT = (235, 238, 240, 255)
+    # Abre browser
+    webbrowser.open("https://twitter.com/cosminpm/status/" + str(tweet_citado_id))
+    
+    time.sleep(5)
+    img = pyautogui.screenshot(region=(COORD_X, COORD_Y, ANCHURA, ALTURA))
+    img.save(NOMBRE_FICHERO)
+    #Recortar imagen
+    captura = Image.open(NOMBRE_FICHERO).convert('RGBA')
+    cols, rows = captura.size
+    recorte_y = rows
+    print(cols, rows)
+    for row in range(0, rows):
+        #print(row)
+        print(captura.getpixel((0, row)))
+        if (captura.getpixel((0,row)) == COLOR_CUT):
+            recorte_y = row
+            break
+    print(str(captura.size), ANCHURA, ALTURA - recorte_y)
+    captura.crop((0, 0, ANCHURA, recorte_y)).save('patata2.png')
+    os.system("taskkill /im chrome.exe /f")
+    captura.crop()
 def check_mentions(api, since_id):
     logger.info("Escribiendo tweets de respuestas a los usuarios")
     new_since_id = since_id
     # Recorre todos los tweets en los que se menciona cuya id sea la pasada como parametro
     for tweet in tweepy.Cursor(api.mentions_timeline, since_id = since_id).items():
-        #logger.info(tweet)
-        logger.info(tweet.text)
-
+        if tweet.in_reply_to_status_id is not None:
+            # Obtiene id en string del tuit citado
+            tweet_citado_id = api.get_status(tweet.in_reply_to_status_id).quoted_status_id
+            capturarImagen(tweet_citado_id)
 
 def main():
+    TIME_WAITING = 60
     api = create_api()
     since_id = 1
     while True:
@@ -47,7 +78,7 @@ def main():
         since_od = check_mentions(api, since_id)
         logger.info("Esperando a que lleguen solicitudes")
         # Se tiene que hacer un sleep para que no se sobreesature las solicitudes de la API
-        time.sleep(60)
+        time.sleep(TIME_WAITING)
 
 if __name__ == '__main__':
     main()

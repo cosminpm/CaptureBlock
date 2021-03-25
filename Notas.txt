@@ -11,6 +11,7 @@ Para obtener los links
 https://twitter.com/twitter/status/
 Y para obtener al tweet al que se esta respondiendo basta con obtener el atributo in_reply_to_status_id por lo que el link seria:
 https://twitter.com/twitter/status/in_reply_to_status_id
+https://twitter.com/twitter/status/1375165733198573570
 
 Captura desde GUI
 Hay que tener en cuenta lo siguiente:
@@ -23,3 +24,14 @@ https://twitter.com/cosminpm/status/1374518048367861768
 
 Posible alternativa a selenium
 https://medium.com/analytics-vidhya/how-to-create-twitter-screenshots-with-python-c142ef71fda7
+
+
+-- Cortar imagenes
+yourImage.crop((0, 30, w, h-30)).save(...)
+
+
+
+Funcionalidad del bot:
+
+Si la persona que cita no menciona a ningun tweet:
+ - 
