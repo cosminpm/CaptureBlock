@@ -9,6 +9,8 @@ import pyautogui
 from PIL import Image
 
 NOMBRE_FICHERO = 'patata.png'
+RESULTADO_FICHERO = 'patata2.png'
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -56,9 +58,10 @@ def capturarImagen(tweet_citado_id):
             recorte_y = row
             break
     print(str(captura.size), ANCHURA, ALTURA - recorte_y)
-    captura.crop((0, 0, ANCHURA, recorte_y)).save('patata2.png')
+    captura.crop((0, 0, ANCHURA, recorte_y)).save(RESULTADO_FICHERO)
+    # Cerrar browser
     os.system("taskkill /im chrome.exe /f")
-    captura.crop()
+
 def check_mentions(api, since_id):
     logger.info("Escribiendo tweets de respuestas a los usuarios")
     new_since_id = since_id
@@ -68,7 +71,8 @@ def check_mentions(api, since_id):
             # Obtiene id en string del tuit citado
             tweet_citado_id = api.get_status(tweet.in_reply_to_status_id).quoted_status_id
             capturarImagen(tweet_citado_id)
-
+            respuesta = "@"+str(tweet.author.screen_name)
+            api.update_with_media(RESULTADO_FICHERO, status=(respuesta), in_reply_to_status_id=tweet.id)
 def main():
     TIME_WAITING = 60
     api = create_api()
